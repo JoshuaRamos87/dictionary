@@ -1,7 +1,6 @@
 
 const ps = require("prompt-sync")
 let http = require("https");
-let fs = require('fs');
 const prompt = ps();
 let word = prompt("type word for definition ");
 
@@ -21,7 +20,6 @@ let req = http.request(options, function (res) {
 let chunks = [];
 
 res.on("data", function (chunk) {
-    //console.log(chunk)
     chunks.push(chunk);
 });
 
@@ -32,9 +30,10 @@ res.on("end", function () {
         try{
             
             if(jsonObject["title"] === "No Definitions Found")
+            {
                 console.log(jsonObject["title"])
                 process.exit()
-            
+            }
             } catch(err){}
 
         for(let l = 0; l < Object.keys(jsonObject).length; l++)
