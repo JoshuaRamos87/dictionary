@@ -1,0 +1,25 @@
+{
+  "name": "dictionary",
+  "version": "1.0.0",
+  "description": "interfacing with dictionaryapi",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshuaRamos87/dictionary.git"
+  },
+  "keywords": [
+    "dictionary"
+  ],
+  "author": "Joshua Ramos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoshuaRamos87/dictionary/issues"
+  },
+  "homepage": "https://github.com/JoshuaRamos87/dictionary#readme",
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
