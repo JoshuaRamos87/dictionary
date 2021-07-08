@@ -1,9 +1,11 @@
-
-const mySecret = process.env['TOKEN']
+require("dotenv").config();
+const mySecret = process.env.TOKEN
 const Discord = require("discord.js");
 const http = require("https");
 const client = new Discord.Client();
 
+
+client.login(mySecret);
 
 client.on("ready", () => {
   console.log(`Logged in as
@@ -46,7 +48,7 @@ client.on("message", msg => {
     catch(err){}
 
 });
-client.login(mySecret);
+
 
 
 function displaySyn(jsonObject,msg)
