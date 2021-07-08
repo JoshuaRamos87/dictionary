@@ -19,7 +19,7 @@ npm install
 ## Example of running program
 
 ```
-npm start <APIKEY>
+npm start
 ```
 
 ## Author
