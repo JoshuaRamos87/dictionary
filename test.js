@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 const fetch = require("node-fetch");
 const { prototype } = require("events");
 const http = require("https");
+const { searchPic } = require("iqdb-client");
 const client = new Discord.Client();
 
 client.login(mySecret);
@@ -80,9 +81,44 @@ function command(msg)
       findAnime(msg.toString().split(" ")[urlIndex],flags,msg)
       flags = {};
     }
+    else if(msg.toString().includes("$findSource"))
+    {
+      let URL = msg.toString().split(" ")[1]
+      console.log(URL)
+
+      findSource(msg,URL);
+
+    }
   }
   catch(err){}
 }
+
+async function findSource(msg,URL)
+{
+  //URL = 'https://i.pximg.net/img-original/img/2021/06/24/21/37/50/90781507_p0.jpg';
+  const result = (await searchPic(URL, { lib: 'www' }))
+  //see ./src/api.test.ts for more examples.
+  console.log(result.data)
+  if(result.ok)
+  {
+    console.log("Loading results...")
+    displayImageMatch(msg,result.data);
+  }
+  else{
+    msg.channel.send("No good source found :(");
+  }
+}
+
+function displayImageMatch(msg,jsonObject)
+{
+
+  if(jsonObject[1]["sourceUrl"].includes("https://"))
+    msg.channel.send(jsonObject[1]["sourceUrl"])
+  else
+    msg.channel.send("https://" + jsonObject[1]["sourceUrl"].substring(2))
+
+}
+
 
 function findAnime(URL,flags,msg)
 {
