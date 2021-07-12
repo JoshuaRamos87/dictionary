@@ -83,26 +83,43 @@ function command(msg)
     }
     else if(msg.toString().includes("$findSource"))
     {
-      let URL = msg.toString().split(" ")[1]
-      console.log(URL)
+      let flags ={};
+      let urlIndex = 0;
+      for(let i = 1; msg.toString().split(" ")[i] !== undefined; ++i)
+      {
+        urlIndex = i;
+        if(msg.toString().split(" ")[i].toLowerCase() === "-g")
+          flags["-g"] = true;
+      }
+      let URL = msg.toString().split(" ")[urlIndex]
+      //console.log(URL)
 
-      findSource(msg,URL);
+      findSource(msg,URL,flags);
+      flags = {};
 
     }
   }
   catch(err){}
 }
 
-async function findSource(msg,URL)
+async function findSource(msg,URL,flags)
 {
+  let result = 0;
   //URL = 'https://i.pximg.net/img-original/img/2021/06/24/21/37/50/90781507_p0.jpg';
-  const result = (await searchPic(URL, { lib: 'www' }))
+  msg.channel.send("Loading results...")
+  if(flags["-g"])
+  {
+    result = (await searchPic(URL, { lib: 'gelbooru' }))
+  }
+  else
+  {
+    result = (await searchPic(URL, { lib: 'www' }))
+  }
   //see ./src/api.test.ts for more examples.
-  console.log(result.data)
+  //console.log(result.data)
   if(result.ok)
   {
-    console.log("Loading results...")
-    displayImageMatch(msg,result.data);
+    displayImageMatch(msg,result.data,flags);
   }
   else{
     msg.channel.send("No good source found :(");
@@ -113,6 +130,8 @@ function displayImageMatch(msg,jsonObject)
 {
 
   if(jsonObject[1]["sourceUrl"].includes("https://"))
+    msg.channel.send(jsonObject[1]["sourceUrl"])
+  else if(jsonObject[1]["sourceUrl"].includes("http://"))
     msg.channel.send(jsonObject[1]["sourceUrl"])
   else
     msg.channel.send("https://" + jsonObject[1]["sourceUrl"].substring(2))
