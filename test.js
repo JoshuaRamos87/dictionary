@@ -12,6 +12,10 @@ client.login(mySecret);
 client.on("ready", () => {
   console.log(`Logged in as
   ${client.user.tag}!`)
+
+  client.user.setPresence({
+    status: "ver 1.0.1"
+  })
 });
 client.on("message", msg => { 
     if(msg.author.bot) return;
