@@ -1,6 +1,6 @@
 {
   "name": "dictionary",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "interfacing with dictionaryapi",
   "main": "test.js",
   "scripts": {
@@ -22,7 +22,6 @@
   "dependencies": {
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
-    "iqdb-client": "^1.0.5",
-    "node-fetch": "^2.6.1"
+    "iqdb-client": "^1.0.5"
   }
 }
