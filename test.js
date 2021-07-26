@@ -50,6 +50,7 @@ function command(msg)
        msg.channel.send(`$define word`);
        msg.channel.send(`$synonym word`);
        msg.channel.send(`$findAnime (optional flags: -i for image, -v for video, -l=number for number of results) URL`);
+       msg.channel.send(`$findSauce (optional flags: -g for gelbooru specific source links from tagbot) URL`);
 
     }
     else if(msg.toString().includes("$findAnime"))
@@ -83,7 +84,7 @@ function command(msg)
       findAnime(msg.toString().split(" ")[urlIndex],flags,msg)
       flags = {};
     }
-    else if(msg.toString().includes("$findSource"))
+    else if(msg.toString().includes("$findSauce"))
     {
       let flags ={};
       let urlIndex = 0;
@@ -96,7 +97,7 @@ function command(msg)
       let URL = msg.toString().split(" ")[urlIndex]
       //console.log(URL)
 
-      findSource(msg,URL,flags);
+      findSauce(msg,URL,flags);
       flags = {};
 
     }
@@ -104,7 +105,7 @@ function command(msg)
   catch(err){}
 }
 
-async function findSource(msg,URL,flags)
+async function findSauce(msg,URL,flags)
 {
   let result = 0;
   //URL = 'https://i.pximg.net/img-original/img/2021/06/24/21/37/50/90781507_p0.jpg';
