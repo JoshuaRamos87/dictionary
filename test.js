@@ -51,6 +51,7 @@ function command(msg)
        msg.channel.send(`$synonym word`);
        msg.channel.send(`$findAnime (optional flags: -i for image, -v for video, -l=number for number of results) URL`);
        msg.channel.send(`$findSauce (optional flags: -g for gelbooru specific source links from tagbot) URL`);
+       msg.channel.send(`$translate [language name/ISO 639-1 code] [text to translate]`);
 
     }
     else if(msg.toString().includes("$findAnime"))
@@ -101,9 +102,33 @@ function command(msg)
       flags = {};
 
     }
+    else if(msg.toString().includes("$translate"))
+    {
+      let lang = msg.toString().split(" ")[1].toLowerCase();
+
+      let offset = 10 + 2 + msg.toString().split(" ")[1].toLowerCase().length; //10 = command length, 2 = two spaces, rest = length of target language
+
+      let text = msg.toString().toLowerCase().substring(offset);
+
+      //console.log(str)
+      translate(msg,lang,text)
+    }
   }
   catch(err){}
 }
+
+function translate(msg,lang,text)
+{
+  const translate = require('@iamtraction/google-translate');
+
+  translate(text, { to: lang }).then(res => {
+    msg.channel.send(res.text);
+  }).catch(err => {
+    msg.channel.send("translation error occured, double check the target language parameter :3");
+  });
+
+}
+
 
 async function findSauce(msg,URL,flags)
 {
