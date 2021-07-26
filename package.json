@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/JoshuaRamos87/dictionary#readme",
   "dependencies": {
+    "@iamtraction/google-translate": "github:iamtraction/google-translate",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "iqdb-client": "^1.0.5"
