@@ -7,16 +7,14 @@ const http = require("https");
 const { searchPic } = require("iqdb-client");
 const client = new Discord.Client();
 
+
 client.login(mySecret);
 
 client.on("ready", () => {
   console.log(`Logged in as
   ${client.user.tag}!`)
-
-  client.user.setPresence({
-    status: "ver 1.0.1"
-  })
 });
+
 client.on("message", msg => { 
     if(msg.author.bot) return;
     command(msg);
@@ -208,20 +206,41 @@ episode: ${jsonObject["result"][l]["episode"]}
 
 function displaySyn(jsonObject,msg)
 {
-            for(let l = 0; l < Object.keys(jsonObject).length; l++)
-              for(let i = 0; i < Object.keys(jsonObject[l]["meanings"]).length; i++)
-                  for(let j = 0; j < Object.keys(jsonObject[l]["meanings"][i]["definitions"]).length; j++)
-                    for(let n = 0; n < Object.keys(jsonObject[l]["meanings"][i]["definitions"][j]["synonyms"]).length; n++)
-                      msg.channel.send("- " + jsonObject[l]["meanings"][i]["definitions"][j]["synonyms"][n]);
+
+  let str = ''
+    for(let l = 0; l < Object.keys(jsonObject).length; l++)
+    {
+        for(let i = 0; i < Object.keys(jsonObject[l]["meanings"]).length; i++)
+        {
+            for(let j = 0; j < Object.keys(jsonObject[l]["meanings"][i]["definitions"]).length; j++)
+              try
+              {
+                for(let n = 0; n < Object.keys(jsonObject[l]["meanings"][i]["definitions"][j]["synonyms"]).length; n++)
+                {
+                  str += "- " + jsonObject[l]["meanings"][i]["definitions"][j]["synonyms"][n] + '\n'
+                }
+                    
+              }
+              catch(err){}
+        }
+    }
+    if(str === '')
+      msg.channel.send("no synonym found");
+    else
+      msg.channel.send(str);
 }
 
 function displayDef(jsonObject,msg)
 {
+  let str = ''
   for(let l = 0; l < Object.keys(jsonObject).length; l++)
     for(let i = 0; i < Object.keys(jsonObject[l]["meanings"]).length; i++)
       for(let j = 0; j < Object.keys(jsonObject[l]["meanings"][i]["definitions"]).length; j++)
-          msg.channel.send("- " + jsonObject[l]["meanings"][i]["definitions"][j]["definition"])
+      {
+        str += "- " + jsonObject[l]["meanings"][i]["definitions"][j]["definition"] + '\n'
+      }
 
+    msg.channel.send(str);
 }
 
 function findWord(word,msg,choice)
