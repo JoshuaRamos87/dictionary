@@ -1,10 +1,10 @@
 {
   "name": "dictionary",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "interfacing with dictionaryapi",
-  "main": "test.js",
+  "main": "tagbot.js",
   "scripts": {
-    "start": "node test.js"
+    "start": "node tagbot.js"
   },
   "repository": {
     "type": "git",
