@@ -27,6 +27,13 @@ module.exports = {
               let body = Buffer.concat(chunks);
               jsonObject = JSON.parse(body.toString())  
     
+
+            if(jsonObject["title"] === "No Definitions Found")
+            {
+              msg.channel.send(jsonObject["title"])
+              return
+            }
+
               try
               {
                 switch(wordAction)
